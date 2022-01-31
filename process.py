@@ -66,7 +66,7 @@ def main():
 	# Read the limit argument
 	limit = args.limit and int(args.limit) or None 
 	# Open the log file
-	with open("jan_30_2022.log", "r") as file:
+	with open("data/jan_30_2022.log", "r") as file:
 		# Initalize a count to enforce limit and output result
 		count = 0
 		# Print the header row of the CSV
