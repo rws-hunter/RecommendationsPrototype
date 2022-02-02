@@ -61,20 +61,25 @@ def parse_view(xml_list):
 def main():
 	# Parse command line arguments
 	parser = argparse.ArgumentParser()
+	parser.add_argument('--input', help='The input file to read')
+	parser.add_argument('--out', help='The output file to write to')
 	parser.add_argument('--limit', help='Limit the number of items')
 	args = parser.parse_args()
-	# Read the limit argument
+	# Read the arguments
+	filename_in = args.input
+	filename_out = args.out
+	# Default no limit
 	limit = args.limit and int(args.limit) or None 
-	# Open the log file
-	with open("data/jan_30_2022.log", "r") as file:
+	# Open the input and output files
+	with open(filename_in, "r") as file_in, open(filename_out, "w") as file_out:
 		# Initalize a count to enforce limit and output result
 		count = 0
 		# Print the header row of the CSV
-		print("consumer_id,item_key")
+		file_out.write("consumer_id,item_key\n")
 		# Parse each view from the XML file
-		for view in parse_view(get_xml(get_lines(file))):
+		for view in parse_view(get_xml(get_lines(file_in))):
 			# Output the view to the CSV
-			print(view)
+			file_out.write(f"{view}\n")
 			# Enforce the limit constraint
 			if limit and count > limit:
 				break
